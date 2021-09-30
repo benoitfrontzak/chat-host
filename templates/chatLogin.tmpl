@@ -1,0 +1,14 @@
+{{ define "chatLogin" }}
+{{ template "headerChat" }}
+    <div class="wrapper fadeInDown">
+      <div id="formContent" style="background:none;">
+        <form action="/" method="POST">
+          <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+          <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+          <input type="submit" class="btn btn-dark fourth" value="Log In">
+        </form>    
+      </div>
+    </div>
+{{ template "footer" }}
+{{ end }}
+

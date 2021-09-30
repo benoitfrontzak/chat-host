@@ -1,0 +1,90 @@
+{{ define "chatSafe" }}
+{{ template "headerChat" }}
+
+<nav>
+  <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+    <button class="nav-link active" id="nav-chat-tab" data-bs-toggle="tab" data-bs-target="#nav-chat" type="button" role="tab" aria-controls="nav-chat" aria-selected="true">Chat</button>
+    <button class="nav-link" id="nav-users-tab" data-bs-toggle="tab" data-bs-target="#nav-users" type="button" role="tab" aria-controls="nav-users" aria-selected="false">Users</button>
+    <button class="nav-link" id="nav-files-tab" data-bs-toggle="tab" data-bs-target="#nav-files" type="button" role="tab" aria-controls="nav-files" aria-selected="false">Files</button>
+    <button class="nav-link" type="button" aria-selected="false"><a class="text-light" href="/logout/{{.Login}}">Logout</a></button>
+  </div>
+</nav>
+
+<div class="tab-content" id="nav-tabContent">
+    <!-- CHAT -->
+  <div class="tab-pane fade show active" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab">
+    <div class="message-chat">
+        <div class="chat-body" id="chat-body">
+            {{range $i, $e := .Messages}}
+                <div class="message info">
+                        <img class="img-circle medium-image" src="/assets/images/{{.User}}.png" alt="...">
+                        <div class="message-body">
+                            <div class="message-info">
+                                <h4> {{.User}} </h4>
+                                <h5> <i class="fa fa-clock-o"></i> {{.Time}} </h5>
+                            </div>
+                            <hr>
+                            <div class="message-text">
+                                {{.Content}}
+                            </div>
+                        </div>
+                        <br>
+                </div>                  
+            {{end}}
+        </div>
+        <div class="chat-footer">
+            <form action="/chatSafe" method="POST">
+                <input type="hidden" name="login" value="{{.Login}}" />
+                <div class="d-flex flex-row">
+                    <textarea class="form-control" name="message" placeholder="Enter message..."></textarea>
+                    <input class="send-message-button" type="submit" value="+" />
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+    <!-- USERS -->
+  <div class="tab-pane fade" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
+    <div class="card greenBG">
+        <div class="card-content pb-4">
+            {{range  $key, $value :=.Users}}
+                <div class="recent-message d-flex px-4 py-3">
+                    <div class="avatar avatar-lg">
+                        <img class="img-circle medium-image" src="/assets/images/{{$key}}.png" alt="">
+                    </div>
+                    <div class="name ms-4">
+                        <h5 class="mb-1">{{$key}}</h5>
+                        <h6 class="mb-0 text-white">
+                            {{if $value}}
+                                online
+                            {{ else }}
+                                offline
+                            {{end}}
+                        </h6>
+                    </div>
+                </div>
+            {{end}}
+        </div>
+    </div>
+  </div>
+
+    <!-- FILES -->
+  <div class="tab-pane fade text-white" id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
+    <div class="greenBG p-3">
+        <div class="list-group mb-3">    
+            {{range  $key, $value :=.Files}}
+                <a href="/assets/files-toShare/{{$key}}" target="__blank" class="list-group-item list-group-item-action filesAvailable" data-value="{{$key}}">
+                    <div class="d-flex justify-content-between"> 
+                    <div class="text-bold">{{$key}}</div>
+                    <div>({{$value}}Bytes)</div> 
+                    </div>
+                </a>
+            {{end}}
+        </div>   
+    </div>
+  </div>
+</div>
+
+{{ template "footerChat" }}
+{{ end }}

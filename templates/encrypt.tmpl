@@ -1,0 +1,71 @@
+{{ define "encrypt" }}
+{{ template "header" }}
+<nav class="navbar navbar-light bg-light navbar-expand">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home">
+      <img class="img-rounded small-image" src="/assets/images/home.png" alt="..." />
+    </a>
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item activeLink">
+          <a class="nav-link" href="/encrypt/new" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Encrypt">
+            <img class="img-rounded small-image" src="/assets/images/encrypt.png" alt="..." />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/decrypt/new" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Decrypt">
+            <img class="img-rounded small-image" src="/assets/images/decrypt.png" alt="..." />
+          </a>
+        </li>              
+      </ul>
+      <form action="/" method="POST" enctype="application/json">
+        <input type="hidden" name="proxyon" value="y">
+        <button type="submit" class="btn" style="background:none;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Start server"><img class="img-rounded small-image" src="/assets/images/start.png" alt="..." /></button>
+      </form>
+      <form>&nbsp;</form>
+      <form action="/" method="POST" enctype="application/json">
+        <input type="hidden" name="proxyoff" value="y">
+        <button type="submit" class="btn" style="background:none;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Stop server"><img class="img-rounded small-image" src="/assets/images/stop.png" alt="..." /></button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="greenBG rounded">
+{{if .}}
+  <div class="alert alert-primary alert-dismissible fade show" role="alert">
+    Encrypted successfully!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{{end}}
+  <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a class="breadcrumbLink" href="/">Home</a></li>
+      <li class="breadcrumb-item"><a class="breadcrumbLink" href="/encrypt/new">Encrypt</a></li>
+      <li class="breadcrumb-item" aria-current="page">Data</li>
+    </ol>
+  </nav>
+  <form action="/encrypt" method="POST" enctype="multipart/form-data">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="passphraseGroup"><img class="img-rounded small-image" src="/assets/images/locker.png" alt="..." /></span>
+              <input type="text" class="form-control" name="passphrase" id="passphrase" placeholder="passphrase" aria-label="Passphrase" aria-describedby="passphraseGroup">
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="filenameGroup"><img class="img-rounded small-image" src="/assets/images/file.png" alt="..." /></span>
+              <input type="text" class="form-control" name="filename" id="filename" placeholder="filename" aria-label="filename" aria-describedby="filenameGroup">
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="messageGroup"><img class="img-rounded small-image" src="/assets/images/textarea.png" alt="..." /></span>
+              <textarea class="form-control" name="message" id="message" placeholder="Message to encrypt" rows="3" aria-label="With textarea" aria-describedby="messageGroup"></textarea>
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="filesGroup"><img class="img-rounded small-image" src="/assets/images/files.png" alt="..." /></span>
+              <input class="form-control" type="file" name="files" id="files" multiple data-show-upload="false" aria-label="files" aria-describedby="filesGroup" />
+            </div>
+            <div class="mb-3">
+              <button class="btn btn-dark" type="submit">Encrypt</button>
+            </div>
+  </form>
+</div>
+{{ template "footer" }}
+{{end}}

@@ -1,0 +1,118 @@
+{{ define "decrypt" }}
+{{ template "header" }}
+<nav class="navbar navbar-light bg-light navbar-expand">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home">
+      <img class="img-rounded small-image" src="/assets/images/home.png" alt="..." />
+    </a>
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/encrypt/new" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Encrypt">
+            <img class="img-rounded small-image" src="/assets/images/encrypt.png" alt="..." />
+          </a>
+        </li>
+        <li class="nav-item activeLink">
+          <a class="nav-link" href="/decrypt/new" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Decrypt">
+            <img class="img-rounded small-image" src="/assets/images/decrypt.png" alt="..." />
+          </a>
+        </li>              
+      </ul>
+      <form action="/" method="POST" enctype="application/json">
+        <input type="hidden" name="proxyon" value="y">
+        <button type="submit" class="btn" style="background:none;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Start server"><img class="img-rounded small-image" src="/assets/images/start.png" alt="..." /></button>
+      </form>
+      <form>&nbsp;</form>
+      <form action="/" method="POST" enctype="application/json">
+        <input type="hidden" name="proxyoff" value="y">
+        <button type="submit" class="btn" style="background:none;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Stop server"><img class="img-rounded small-image" src="/assets/images/stop.png" alt="..." /></button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="greenBG rounded">
+  <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a class="breadcrumbLink" href="/">Home</a></li>
+      <li class="breadcrumb-item"><a class="breadcrumbLink" href="/decrypt/new">Decrypt</a></li>
+      <li class="breadcrumb-item" aria-current="page">Data</li>
+    </ol>
+  </nav>
+  <form action="/decrypt" method="POST" enctype="multipart/form-data">
+    <div class="d-flex justify-content-between text-dark">
+      <div>Available encrypted files</div>
+      <div>Size</div>
+    </div>
+    <div class="list-group mb-3" id="filesToDecryptContainer">
+      {{range  $key, $value :=.DecFiles}}
+      <a href="#" class="list-group-item list-group-item-action filesAvailable" data-value="{{$key}}">
+        <div class="d-flex justify-content-between"> 
+          <div class="text-bold">{{$key}}</div>
+          <div>({{$value}}Bytes)</div> 
+        </div>
+      </a>
+      {{end}}
+    </div>
+    {{if .Confirm}}
+      <div class="typing-container" id="typing-container">
+        <span id="sentence" class="sentence"></span>
+        <span class="input-cursor"></span>
+      </div>
+    {{end}}
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="filenameGroup"><img class="img-rounded small-image" src="/assets/images/file.png" alt="..." /></span>
+      <input type="text" class="form-control" name="filename" id="filename" placeholder="filename" aria-label="filename" aria-describedby="filenameGroup">
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="passphraseGroup"><img class="img-rounded small-image" src="/assets/images/locker.png" alt="..." /></span>
+      <input type="text" class="form-control" name="passphrase" id="passphrase" placeholder="passphrase" aria-label="Passphrase" aria-describedby="passphraseGroup">
+    </div>
+    
+    <div class="mb-3">
+      <button class="btn btn-dark" type="submit">Decrypt</button>
+    </div>
+  </form>
+</div>
+
+<script>
+window.addEventListener('DOMContentLoaded', (event) => {
+  var elementExists = document.getElementById("typing-container");
+  if (elementExists != null) {
+    function hide (){
+      $("#typing-container").fadeOut("slow");
+    }
+
+    async function typeSentence(sentence, eleRef, delay = 100) {
+      const letters = sentence.split("");
+      let i = 0;
+      while(i < letters.length) {
+        await waitForMs(delay);
+        $(eleRef).append(letters[i]);
+        i++
+      }
+      return;
+    }
+
+    function waitForMs(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+
+    elementExists.addEventListener("click", hide);
+    typeSentence({{.Decrypted}}, "#sentence");
+  }
+
+  var elements = document.getElementsByClassName("filesAvailable");
+  Array.from(elements).forEach(function(element) {
+    element.addEventListener('click', function (e) {
+      var filename = e.target.innerHTML
+      var target = document.getElementById("filename")
+      target.value = filename
+    });
+  });
+});
+</script>
+{{ template "footer" }}
+{{end}}

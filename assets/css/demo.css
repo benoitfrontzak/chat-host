@@ -1,0 +1,198 @@
+
+@media screen and (max-width: 767px) {
+  .greenBG{
+    background-color: #198754;
+    opacity: 0.9;
+    padding: 5px;
+  }
+  .smallResponsive{
+    font-size: small;
+  }
+}
+/* Text typing */
+.typing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.typing-container:hover {
+  cursor:pointer;
+}
+.input-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 42px;
+  background-color: white;
+  margin-left: 8px;
+}
+@keyframes blink {
+  0% {opacity: 1;}
+  40% {opacity: 1;}
+  60% {opacity: 0;}
+  100% {opacity: 0;}
+}
+.input-cursor { 
+animation: blink .6s linear infinite alternate;
+}
+
+/* BASIC */
+  .greenBG{
+    background-color: #198754;
+    opacity: 0.9;
+    padding: 20px;
+  }
+  body {
+    font-family: "Poppins", sans-serif;
+    height: 100vh;
+  }
+  .activeLink{
+    border-style: solid;
+    border-top: none;
+    border-left:none;
+    border-right:none;
+    border-bottom-color: palevioletred;
+  }
+  .linkRed{
+    color: red;
+  }
+  .linkRed:hover {
+    color: hotpink;
+  }
+  .breadcrumbLink{
+    color: white;
+    text-decoration: none;
+  }
+  .breadcrumbLink:hover{
+    color: white;
+    text-decoration: none;
+    font-weight: bolder;
+  }
+  .large-image {
+    width: 90px;
+    height: 90px;
+    margin-right: 15px;
+  }
+
+  .medium-image {
+    width: 45px;
+    height: 45px;
+    margin-right: 5px;
+  }
+
+  .small-image {
+    width: 25px;
+    height: 25px;
+    margin-right: 2px;
+  }
+  .img-circle {
+      border-radius: 50%;
+  }
+  .img-rounded {
+    border-radius: 20%;
+  }
+  /* STRUCTURE */
+  .wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
+    justify-content: center;
+    min-width: 100%;
+    min-height: 100%;
+    padding: 20px;
+  }
+  
+  #formContent {
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    background: #fff;
+    padding: 30px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    padding: 0px;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    text-align: center;
+  }  
+  /* FORM TYPOGRAPHY*/  
+ 
+  /* ANIMATIONS */  
+  /* Simple CSS3 Fade-in-down Animation */
+  .fadeInDown {
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+  
+  @-webkit-keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      -webkit-transform: translate3d(0, -100%, 0);
+      transform: translate3d(0, -100%, 0);
+    }
+    100% {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none;
+    }
+  }
+  
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      -webkit-transform: translate3d(0, -100%, 0);
+      transform: translate3d(0, -100%, 0);
+    }
+    100% {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none;
+    }
+  }
+  
+  /* Simple CSS3 Fade-in Animation */
+  @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  
+  .fadeIn {
+    opacity:0;
+    -webkit-animation:fadeIn ease-in 1;
+    -moz-animation:fadeIn ease-in 1;
+    animation:fadeIn ease-in 1;
+  
+    -webkit-animation-fill-mode:forwards;
+    -moz-animation-fill-mode:forwards;
+    animation-fill-mode:forwards;
+  
+    -webkit-animation-duration:1s;
+    -moz-animation-duration:1s;
+    animation-duration:1s;
+  }
+  
+  .fadeIn.first {
+    -webkit-animation-delay: 0.4s;
+    -moz-animation-delay: 0.4s;
+    animation-delay: 0.4s;
+  }
+  
+  .fadeIn.second {
+    -webkit-animation-delay: 0.6s;
+    -moz-animation-delay: 0.6s;
+    animation-delay: 0.6s;
+  }
+  
+  .fadeIn.third {
+    -webkit-animation-delay: 0.8s;
+    -moz-animation-delay: 0.8s;
+    animation-delay: 0.8s;
+  }
+  
+  .fadeIn.fourth {
+    -webkit-animation-delay: 1s;
+    -moz-animation-delay: 1s;
+    animation-delay: 1s;
+  }

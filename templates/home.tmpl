@@ -1,0 +1,86 @@
+{{ define "home" }}
+{{ template "header" }}
+<nav class="navbar navbar-light bg-light navbar-expand">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home">
+      <img class="img-rounded small-image" src="/assets/images/home.png" alt="..." />
+    </a>
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/encrypt/new" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Encrypt">
+            <img class="img-rounded small-image" src="/assets/images/encrypt.png" alt="..." />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/decrypt/new" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Decrypt">
+            <img class="img-rounded small-image" src="/assets/images/decrypt.png" alt="..." />
+          </a>
+        </li>              
+      </ul>
+      <form action="/" method="POST" enctype="application/json">
+        <input type="hidden" name="proxyon" value="y">
+        <button type="submit" class="btn" style="background:none;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Start server"><img class="img-rounded small-image" src="/assets/images/start.png" alt="..." /></button>
+      </form>
+      <form>&nbsp;</form>
+      <form action="/" method="POST" enctype="application/json">
+        <input type="hidden" name="proxyoff" value="y">
+        <button type="submit" class="btn" style="background:none;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Stop server"><img class="img-rounded small-image" src="/assets/images/stop.png" alt="..." /></button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="greenBG rounded" >
+  <div class="d-flex justify-content-between text-white">
+    <div>Server Link</div><div>&nbsp;</div>
+    {{ if eq .Status 405}}
+      <div><a class="smallResponsive linkRed" target="__blank" href="https://{{.URL}}.localhost.run/">https://{{.URL}}.localhost.run</a></div></div>
+    {{else}}
+      <div>Offline</div></div>
+    {{end}}
+  
+  <div class="d-flex justify-content-between text-white"><div>Server Status</div><div>&nbsp;</div><div>{{.Status}}</div></div>
+  <div class="d-flex justify-content-between text-white"><div>Public IP</div><div>&nbsp;</div><div>{{.PublicIPAPI}}</div></div>
+  <div class="d-flex justify-content-between text-white"><div>Local IP</div><div>&nbsp;</div><div>{{.PublicIPUDP}}</div></div>
+  <div>&nbsp;</div>
+  {{if .EncMessages}}
+  <div class="text-white">
+    <div class="d-flex justify-content-between text-white">
+      <div>Encrypted Messages</div>
+      <div>Size</div>
+    </div>
+    <div class="list-group mb-3">
+      {{range  $key, $value :=.EncMessages}}
+      <a href="#" class="list-group-item list-group-item-action filesAvailable" data-value="{{$key}}">
+        <div class="d-flex justify-content-between"> 
+          <div class="text-bold">{{$key}}</div>
+          <div>({{$value}}Bytes)</div> 
+        </div>
+      </a>                       
+      {{end}}
+    </div>
+  </div>
+  {{end}}
+  {{if .EncFiles}}
+  <div class="text-white">
+    <div class="d-flex justify-content-between text-white">
+      <div>Encrypted Files</div>
+      <div>Size</div>
+    </div>
+    <div class="list-group mb-3">
+      {{range  $key, $value :=.EncFiles}}
+      <a href="#" class="list-group-item list-group-item-action filesAvailable" data-value="{{$key}}">
+        <div class="d-flex justify-content-between"> 
+          <div class="text-bold">{{$key}}</div>
+          <div>({{$value}}Bytes)</div> 
+        </div>
+      </a>                       
+      {{end}}
+    </div>
+  </div>
+  {{end}}
+</div>
+
+{{ template "footer" }}
+{{ end }}
