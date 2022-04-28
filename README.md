@@ -1,4 +1,4 @@
-# chat-host
+# dapp : chat-host
 
 Run first set-chat-host, it will creates:
 - $HOME/.ssh/id_ed25519
